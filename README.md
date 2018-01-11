@@ -29,7 +29,7 @@ Once this step is done, you can go to `http://drupal.docker.localhost:8000` to s
 #### Drupaling and Commit
 
 - Drupaling like you usually do!
-- When you get to a stopping point, you need to export your site configuration. Run `docker-compose exec --user 82 php drush config-export -y`
+- When you get to a stopping point, you need to export your site configuration. Run `docker-compose exec --user 82 php drush config-export -y --root=/var/www/html/web`
 - Configuration will be exported to `config/sync` directory.
 - Commit and push to your repository.
 
@@ -43,8 +43,8 @@ Once this step is done, you can go to `http://drupal.docker.localhost:8000` to s
 - At site root directory:
 
         - cat config/sync/system.site.yml to get uuid.
-        - docker-compose exec --user 82 php drush cset "system.site" uuid "uuid-from-system-site-yml"
-        - docker-compose exec --user 82 php drush config-import
+        - docker-compose exec --user 82 php drush cset "system.site" uuid "uuid-from-system-site-yml" --root=/var/www/html/web
+        - docker-compose exec --user 82 php drush config-import --root=/var/www/html/web
 
 - If you have this error `Entities exist of type Shortcut link and Default. These entities need to be deleted before importing.`, replace uuid in `shortcut.set.default.yml` as null then try to re-import again. Here's a link to the [bug](https://www.drupal.org/node/2583113) report in the D8 issue queue.
 - After this, your site should be up-to-date.
